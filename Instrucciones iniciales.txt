@@ -1,0 +1,21 @@
+Estructura del proyecto
+
+Usa una estructura de carpetas clara (src/, docs/, tests/, etc.).
+Divide el código en módulos reutilizables.
+Control de versiones
+
+Usa Git y un repositorio en GitHub/GitLab.
+Escribe commits descriptivos.
+Documentación
+
+README con descripción, instalación y uso.
+Comentarios en el código y docstrings en funciones.
+Wiki o Notion para ideas y estrategias de puja.
+Pruebas y depuración
+
+Usa pytest o unittest para pruebas automatizadas.
+Maneja excepciones para evitar que el bot falle por pequeños errores.
+Registros y monitoreo
+
+Usa logging para registrar eventos importantes (errores, pujas ganadas, etc.).
+Si planeas escalar, puedes integrar una base de datos para guardar historial de pujas.

@@ -1,0 +1,35 @@
+📌 Tareas principales del proyecto
+🔹 Fase 1: Análisis y planificación
+✅ Definir los requisitos del bot (qué debe hacer exactamente).
+✅ Investigar cómo funciona la plataforma de subastas (estructura web, reglas, tiempos, etc.).
+✅ Elegir herramientas: Selenium, base de datos (si es necesaria), lenguajes (Python).
+✅ Diseñar la estructura general del proyecto.
+
+🔹 Fase 2: Desarrollo del bot
+✅ Configurar el entorno de desarrollo (Python, Selenium, librerías necesarias).
+✅ Crear el script para iniciar sesión en la plataforma de subastas.
+✅ Desarrollar la lógica para buscar y monitorear productos.
+✅ Implementar la automatización de pujas con reglas específicas (precio máximo, tiempo, etc.).
+✅ Agregar manejo de errores y excepciones para evitar bloqueos.
+
+🔹 Fase 3: Integración y optimización
+✅ Evaluar si se necesita una base de datos para almacenar datos de subastas.
+✅ Implementar logs para hacer seguimiento de las acciones del bot.
+✅ Optimizar tiempos de ejecución y hacer pruebas para evitar detección.
+
+🔹 Fase 4: Reventa y automatización adicional
+✅ Analizar qué productos revender y en qué plataforma.
+✅ Automatizar el proceso de publicación de productos (si es viable).
+✅ Implementar reportes sobre ganancias, pérdidas y estadísticas.
+
+🔹 Fase 5: Documentación y mantenimiento
+✅ Documentar todo el código y su uso.
+✅ Hacer pruebas periódicas y mejorar el bot según necesidades.
+
+📚 Conocimientos mínimos necesarios
+💡 Python → Variables, funciones, estructuras de control, manejo de errores.
+💡 Selenium → Uso básico, interacción con elementos web, espera de elementos.
+💡 HTML/CSS → Para entender la estructura de las páginas web.
+💡 XPath y Selectores CSS → Para ubicar elementos en la web.
+💡 Manejo de archivos (CSV, JSON, SQL) → Si necesitas almacenar datos.
+💡 Automatización y control de flujo → Manejo de tiempos y excepciones.
