@@ -1,9 +1,11 @@
 import { test, expect } from '@playwright/test';
+import dotenv from 'dotenv';
 
-
+// Load environment variables
+dotenv.config();
 
 test('has title', async ({ page }) => {
-  await page.goto('https://johnpye.es/?gad_source=1&gclid=Cj0KCQiAoJC-BhCSARIsAPhdfSis34M7mQAIdAiyiP9GTM7zzGZOCqZJ1Tl5EAwBioiS-hnuPUI3iAQaAsomEALw_wcB');
+  await page.goto('https://johnpye.es/');
 
   const aceptarCookies = async () => {
     const acceptCookiesButton = page.locator('button:has-text("Accept all cookies")');
@@ -20,8 +22,8 @@ test('has title', async ({ page }) => {
   aceptarCookies();
   await page.waitForTimeout(2000);
 
-  await page.fill('input[name="username"]', 'cleon2005sanchez@gmail.com');
-  await page.fill('input[name="password"]', 'bcesto2005');
+  await page.fill('input[name="username"]', process.env.USERNAME || '');
+  await page.fill('input[name="password"]', process.env.PASSWORD || '');
   aceptarCookies();
 
   await page.check('input[name="terms"]');
