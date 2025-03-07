@@ -32,26 +32,30 @@ test('has title', async ({ page }) => {
 
   await page.check('input[name="terms"]');
   await page.getByRole('button', { name: 'Iniciar sesión' }).click();
-  await page.getByRole('link', { name: 'ZARAGOZA' }).click();
-  await page.getByRole('link', { name: 'TECNOLOGÍA Y JUEGOS' }).click();
 
+  await page.goto('https://johnpyesubastas.es/Browse/R100054339-C183360492-C217168966/ZARAGOZA-TECNOLOG%C3%8DA-Y-JUEGOS-PORT%C3%81TILES-MACBOOKS');
+  // await page.getByRole('link', { name: 'ZARAGOZA' }).click();
+  // await page.getByRole('link', { name: 'TECNOLOGÍA Y JUEGOS' }).click();
 
-  const links = page.locator('a:has-text("PORTÁTIL")');
-  const count = await links.count();
-  for (let i = 0; i < count; i++) {
+  // Select elements with class 'gallery_shortTitle'
+  const elements = page.locator('.gallery_shortTitle');
+  const prices = page.locator('.NumberPart');
 
-    if(links[i].textContent().includes("ASUS")){
-      await links.nth(i).click();
-      await page.waitForTimeout(5000);
+  // Get the count of elements
+  const elementsCount = await elements.count();
+  const pricesCount = await prices.count();
+  console.log(`Number of elements with class 'gallery_shortTitle':`, elementsCount);
+  console.log(`Number of elements with class 'NumberPart':`, pricesCount);
+
+  // Loop through each element and log its text
+  for (let i = 0 , j = 0; i < elementsCount; i++ , j += 2) {
+    const text = await elements.nth(i).textContent();
+    const price = await prices.nth(j).textContent();
+    if (text?.includes("ASUS") || text?.includes("MSI") || text?.includes("HP")) {
+      console.log(`🥦 PUJA! ${i + 1}:`, text?.trim());
+      console.log(`Precio:`, price?.trim());
+
     }
-    if(links[i].textContent().includes("MSI")){
-      await links.nth(i).click();
-      await page.waitForTimeout(5000);
-    }
-    if(links[i].textContent().includes("HP")){
-      await links.nth(i).click();
-      await page.waitForTimeout(5000);
-    }
+    // console.log(`Element ${i + 1}:`, text?.trim());
   }
 });
-
