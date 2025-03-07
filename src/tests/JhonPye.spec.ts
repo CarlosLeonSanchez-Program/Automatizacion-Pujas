@@ -1,35 +1,34 @@
 import { test, expect } from '@playwright/test';
+import { HomeObjects } from './page-object/home';
 import * as dotenv from 'dotenv';
 
 // Load environment variables
 dotenv.config();
+
+let homeObjects: HomeObjects;
 
 const user = {
   username: process.env.JP_USERNAME || '',
   password: process.env.JP_PASSWORD || ''
 }
 
+test.beforeEach(async ({ page }) => {
+  homeObjects = new HomeObjects(page);
+});
+
 test('has title', async ({ page }) => {
   await page.goto('https://johnpye.es/');
 
-  const aceptarCookies = async () => {
-    const acceptCookiesButton = page.locator('button:has-text("Accept all cookies")');
-    if (await acceptCookiesButton.isVisible()) {
-      await acceptCookiesButton.click();
-      console.log("✅ Cookies aceptadas");
-    }
-  };
+  await homeObjects.acceptCookies();
+  await homeObjects.homeLoads();
 
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/John Pye Subastas/);
-
-  await page.getByRole('link', { name: 'Iniciar sesión' }).click();
-  aceptarCookies();
+  await homeObjects.loginLink.click();
+  await homeObjects.acceptCookies();
   await page.waitForTimeout(2000);
 
   await page.fill('input[name="username"]', user.username || '');
   await page.fill('input[name="password"]', user.password || '');
-  aceptarCookies();
+  await homeObjects.acceptCookies();
 
   await page.check('input[name="terms"]');
   await page.getByRole('button', { name: 'Iniciar sesión' }).click();
