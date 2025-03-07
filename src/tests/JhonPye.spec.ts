@@ -1,8 +1,13 @@
 import { test, expect } from '@playwright/test';
-import dotenv from 'dotenv';
+import * as dotenv from 'dotenv';
 
 // Load environment variables
 dotenv.config();
+
+const user = {
+  username: process.env.JP_USERNAME || '',
+  password: process.env.JP_PASSWORD || ''
+}
 
 test('has title', async ({ page }) => {
   await page.goto('https://johnpye.es/');
@@ -22,8 +27,8 @@ test('has title', async ({ page }) => {
   aceptarCookies();
   await page.waitForTimeout(2000);
 
-  await page.fill('input[name="username"]', process.env.USERNAME || '');
-  await page.fill('input[name="password"]', process.env.PASSWORD || '');
+  await page.fill('input[name="username"]', user.username || '');
+  await page.fill('input[name="password"]', user.password || '');
   aceptarCookies();
 
   await page.check('input[name="terms"]');
