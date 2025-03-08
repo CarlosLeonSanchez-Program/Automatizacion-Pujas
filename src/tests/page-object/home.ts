@@ -1,4 +1,15 @@
 import { expect, type Locator, type Page } from '@playwright/test';
+import * as dotenv from 'dotenv';
+
+// Load environment variables
+dotenv.config();
+
+// Declaro los datos de usuario
+const user = {
+    username: process.env.JP_USERNAME,
+    password: process.env.JP_PASSWORD,
+  
+}
 
 export class HomeObjects {
     readonly page: Page;
@@ -9,6 +20,8 @@ export class HomeObjects {
     readonly usernameInput: Locator
     readonly passwordInput: Locator
     readonly loginButton: Locator
+
+    // Declaro los datos de usuario
     
     constructor(page: Page) {
         this.page = page;
@@ -17,7 +30,14 @@ export class HomeObjects {
         this.loginLink = page.locator('a[class="fusion-button button-flat fusion-button-default-size button-custom fusion-button-default button-2 fusion-button-default-span fusion-has-button-gradient"] span[class="fusion-button-text"]');
         this.usernameInput = page.locator('input[name="username"]');
         this.passwordInput = page.locator('input[name="password"]');
-        this.loginButton = page.locator('button:has-text("Iniciar sesión")');
+        this.loginButton = page.locator('input[value="Iniciar sesión"]');
+    }
+
+    async inputUserData() {
+
+        await this.usernameInput.fill(user.username || 'pepe');
+        await this.passwordInput.fill(user.password || 'pepe');
+
     }
     
     async acceptCookies() {
@@ -27,45 +47,33 @@ export class HomeObjects {
         }
     }
 
+    async acceptTerms() {
+        if (await this.page.isVisible('input[name="terms"]')) {
+        await this.page.check('input[name="terms"]');
+        console.log("✅ Términos aceptados");
+        }
+    }
+
+    async clickLogin() {
+        await this.loginButton.click();
+        console.log("✅ Iniciando sesión");
+    }
+
+    async goToLaptops(){
+
+       let url = 'https://johnpyesubastas.es/Browse/R100054339-C183360492-C217168966/ZARAGOZA-TECNOLOG%C3%8DA-Y-JUEGOS-PORT%C3%81TILES-MACBOOKS';
+
+        await this.page.goto(url);
+    }
+
     async homeLoads() {
         await expect(this.page).toHaveTitle(/John Pye Subastas/);
     }
     
-    async login(username: string, password: string) {
-        await this.page.getByRole('link', { name: 'Iniciar sesión' }).click();
-        await this.acceptCookies();
-        await this.page.waitForTimeout(2000);
-    
-        await this.page.fill('input[name="username"]', username || '');
-        await this.page.fill('input[name="password"]', password || '');
-        await this.acceptCookies();
-    
-        await this.page.check('input[name="terms"]');
-        await this.page.getByRole('button', { name: 'Iniciar sesión' }).click();
-    }
     
     async goToAuction() {
         await this.page.getByRole('link', { name: 'ZARAGOZA' }).click();
         await this.page.getByRole('link', { name: 'TECNOLOGÍA Y JUEGOS' }).click();
     }
     
-    async selectProduct(product: string) {
-        const links = this.page.locator('a:has-text("' + product + '")');
-        const count = await links.count();
-        for (let i = 0; i < count; i++) {
-    
-        if (links[i].textContent().includes("ASUS")) {
-            await links.nth(i).click();
-            await this.page.waitForTimeout(5000);
-        }
-        if (links[i].textContent().includes("MSI")) {
-            await links.nth(i).click();
-            await this.page.waitForTimeout(5000);
-        }
-        if (links[i].textContent().includes("HP")) {
-            await links.nth(i).click();
-            await this.page.waitForTimeout(5000);
-        }
-        }
-    }
 }
